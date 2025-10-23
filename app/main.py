@@ -9,7 +9,10 @@ def main():
     # Uncomment this to pass the first stage
 
     server = socket.create_server(("localhost", 9092), reuse_port=True)
-    server.accept()  # wait for client
+    sock, _ = server.accept()
+    with sock:
+        response = b"\x00\x00\x00\x00\x00\x00\x00\x07"
+        sock.sendall(response)
 
 
 if __name__ == "__main__":
